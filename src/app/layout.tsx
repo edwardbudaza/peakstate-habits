@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import { Providers } from "./providers";
+
 const font = Inter({
   subsets: ["latin"],
   variable: "--font-geist-sans",
@@ -19,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${font.className} antialiased`}>{children}</body>
+      <body className={`${font.className} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
