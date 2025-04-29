@@ -14,7 +14,7 @@ export default function SignIn() {
     setIsLoading(true);
     setAuthProvider("google");
     try {
-      await signIn("google", { callbackUrl: "/" });
+      await signIn("google", { callbackUrl: "/dashboard" });
     } catch (error) {
       console.error("Error signing in with Google", error);
     } finally {

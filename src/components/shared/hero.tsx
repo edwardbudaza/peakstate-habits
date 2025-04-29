@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   Target,
@@ -24,6 +26,14 @@ export default function Hero() {
     ? "opacity-100 translate-y-0"
     : "opacity-0 translate-y-10";
 
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const isLoggedIn = !!session?.user;
+
+  const handleClick = () => {
+    router.push(isLoggedIn ? "/dashboard" : "/auth/signin");
+  };
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white to-cyan-50 py-20 lg:py-24">
       {/* Background decoration */}
@@ -70,11 +80,19 @@ export default function Hero() {
           >
             <button
               type="button"
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-medium text-white bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto"
+              onClick={handleClick}
+              className={`flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-medium text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto
+          ${
+            isLoggedIn
+              ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+              : "bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700"
+          }
+        `}
             >
               {`Let's get started`}
               <ArrowRight className="w-5 h-5" />
             </button>
+
             <button
               type="button"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-medium text-cyan-700 bg-white border border-cyan-200 hover:bg-gray-50 transition-colors duration-300 w-full sm:w-auto"

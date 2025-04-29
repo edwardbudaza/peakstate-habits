@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { Menu, X, ChevronDown, LayoutDashboard } from "lucide-react";
 import { useSession, signIn } from "next-auth/react";
 import UserMenu from "./user-menu"; // Import the UserMenu component
 
@@ -95,13 +96,22 @@ export default function Navbar() {
           {/* Authentication / User Menu */}
           <div className="hidden md:flex items-center space-x-4">
             {session?.user ? (
-              <UserMenu
-                user={{
-                  name: session?.user?.name ?? undefined,
-                  email: session?.user?.email ?? undefined,
-                  image: session?.user?.image ?? undefined,
-                }}
-              />
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-cyan-700 border border-cyan-200 hover:bg-gray-100 transition-colors duration-300"
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  Dashboard
+                </Link>
+                <UserMenu
+                  user={{
+                    name: session?.user?.name ?? undefined,
+                    email: session?.user?.email ?? undefined,
+                    image: session?.user?.image ?? undefined,
+                  }}
+                />
+              </>
             ) : (
               <>
                 <button
